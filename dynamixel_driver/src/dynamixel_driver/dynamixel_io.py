@@ -68,6 +68,7 @@ class DynamixelIO(object):
             self.ser.setTimeout(0.015)
             self.ser.baudrate = baudrate
             self.port_name = port
+            self.wait_for_serial_response = 0.04
         except SerialOpenError:
            raise SerialOpenError(port, baudrate)
 
@@ -132,7 +133,7 @@ class DynamixelIO(object):
 
             # wait for response packet from the motor
             timestamp = time.time()
-            time.sleep(0.0013)#0.00235)
+            time.sleep(self.wait_for_serial_response)#0.00235)
 
             # read response
             data = self.__read_response(servo_id)
@@ -171,7 +172,7 @@ class DynamixelIO(object):
 
             # wait for response packet from the motor
             timestamp = time.time()
-            time.sleep(0.0013)
+            time.sleep(self.wait_for_serial_response)
 
             # read response
             data = self.__read_response(servo_id)
@@ -234,7 +235,7 @@ class DynamixelIO(object):
 
             # wait for response packet from the motor
             timestamp = time.time()
-            time.sleep(0.0013)
+            time.sleep(self.wait_for_serial_response)
 
             # read response
             try:
